@@ -36,7 +36,7 @@ function Contact() {
               <button type="button" className="btn btn-primary" onClick={open}>
                 Solicitar cotação
               </button>
-              <a className="hero__secondary" href="mailto:contato@logipro.com.br">
+              <a className="btn hero__secondary" href="mailto:contato@logipro.com.br">
                 Enviar e-mail direto
               </a>
             </div>

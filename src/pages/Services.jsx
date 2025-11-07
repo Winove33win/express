@@ -37,7 +37,7 @@ function Services() {
               <button type="button" className="btn btn-primary" onClick={open}>
                 Solicitar proposta
               </button>
-              <Link to="/contato" className="hero__secondary">
+              <Link to="/contato" className="btn hero__secondary">
                 Falar com especialista
               </Link>
             </div>
