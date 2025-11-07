@@ -36,8 +36,8 @@ export function Footer() {
       <div className="container footer-bottom">
         <p>© {year} LogiPro. Todos os direitos reservados.</p>
         <div className="footer-legal">
-          <a href="#">Política de privacidade</a>
-          <a href="#">Termos de uso</a>
+          <NavLink to="/politica-de-privacidade">Política de privacidade</NavLink>
+          <NavLink to="/termos-de-uso">Termos de uso</NavLink>
         </div>
       </div>
     </footer>
