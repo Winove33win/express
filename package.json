@@ -2,19 +2,29 @@
   "name": "modelo-evento",
   "version": "1.0.0",
   "private": true,
-  "description": "Template de landing one-page servida por Node/Express",
+  "description": "Template de landing multi-page servida por Node/Express",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "nodemon app.js"
   },
   "dependencies": {
     "compression": "^1.7.5",
     "express": "^4.19.2",
-    "helmet": "^7.1.0"
+    "framer-motion": "^11.0.0",
+    "helmet": "^7.1.0",
+    "lucide-react": "^0.372.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@vitejs/plugin-react": "^4.2.1",
+    "nodemon": "^3.0.1",
+    "vite": "^5.2.0"
   },
   "engines": {
     "node": ">=18"

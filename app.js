@@ -6,23 +6,22 @@ const helmet = require("helmet");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const distPath = path.join(__dirname, "dist");
+const indexFile = path.join(distPath, "index.html");
 
-// Pequenas proteções + gzip
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(compression());
 
-// Servir estáticos da pasta /public
 app.use(
-  express.static(path.join(__dirname, "public"), {
-    index: "index.html",
+  express.static(distPath, {
+    index: false,
     maxAge: "1d",
     etag: true,
   })
 );
 
-// Fallback para SPA (qualquer rota volta pro index.html)
 app.get("*", (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(indexFile);
 });
 
 app.listen(PORT, () => {
