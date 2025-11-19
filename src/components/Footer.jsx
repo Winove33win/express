@@ -1,43 +1,51 @@
-import { NavLink } from "react-router-dom";
-import { Mail, Phone, MapPin } from "lucide-react";
-
-export function Footer() {
-  const year = new Date().getFullYear();
-
+function Footer() {
   return (
-    <footer className="footer" id="footer">
-      <div className="container footer-grid">
-        <div>
-          <p className="footer-brand">LogiPro</p>
-          <p className="footer-subtitle">
-            Operações logísticas inteligentes, com rastreabilidade em tempo real e atendimento consultivo para todo o Brasil.
+    <footer className="bg-slate-900 text-white">
+      <section id="blog" className="mx-auto w-full max-w-6xl px-6 py-10">
+        <div className="rounded-3xl bg-gradient-to-r from-blue-900 to-slate-900 p-8" data-aos="fade-up">
+          <p className="text-sm uppercase tracking-[0.3em] text-yellow-300">Blog</p>
+          <h3 className="mt-2 text-2xl font-semibold">Insights estratégicos em logística</h3>
+          <p className="mt-2 text-slate-100">
+            Conteúdos exclusivos sobre tendências, compliance e tecnologia para transporte, armazenagem e supply chain.
           </p>
         </div>
-        <nav aria-label="Rodapé" className="footer-nav">
-          <span>Navegue</span>
-          <NavLink to="/">Início</NavLink>
-          <NavLink to="/sobre">Sobre</NavLink>
-          <NavLink to="/servicos">Serviços</NavLink>
-          <NavLink to="/contato">Contato</NavLink>
-        </nav>
-        <div className="footer-contact">
-          <span>Fale conosco</span>
-          <a href="mailto:contato@logipro.com.br">
-            <Mail size={18} /> contato@logipro.com.br
-          </a>
-          <a href="tel:+551130000000">
-            <Phone size={18} /> +55 (11) 3000-0000
-          </a>
-          <p>
-            <MapPin size={18} /> Av. das Operações, 450 - São Paulo/SP
-          </p>
+      </section>
+      <div className="border-t border-white/10">
+        <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 md:grid-cols-4">
+          <div>
+            <p className="text-lg font-semibold"><span className="text-yellow-400">Atento</span> Logística</p>
+            <p className="mt-3 text-sm text-slate-300">
+              Transporte, armazenagem e tecnologia em uma plataforma completa com cobertura nacional.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-slate-200">Links</h4>
+            <ul className="mt-3 space-y-2 text-sm text-slate-300">
+              <li><a href="#institucional">Sobre</a></li>
+              <li><a href="#diferenciais">Diferenciais</a></li>
+              <li><a href="#blog">Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-slate-200">Serviços</h4>
+            <ul className="mt-3 space-y-2 text-sm text-slate-300">
+              <li>Rodo</li>
+              <li>Modal Aéreo</li>
+              <li>Health</li>
+              <li>Biolog</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-slate-200">Contato</h4>
+            <ul className="mt-3 space-y-2 text-sm text-slate-300">
+              <li>contato@atentologistica.com.br</li>
+              <li>+55 (11) 4000-2025</li>
+              <li>Av. das Conexões, 750 - São Paulo/SP</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div className="container footer-bottom">
-        <p>© {year} LogiPro. Todos os direitos reservados.</p>
-        <div className="footer-legal">
-          <NavLink to="/politica-de-privacidade">Política de privacidade</NavLink>
-          <NavLink to="/termos-de-uso">Termos de uso</NavLink>
+        <div className="border-t border-white/10 py-6">
+          <p className="text-center text-xs text-slate-400">© 2025 Atento Logística. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
