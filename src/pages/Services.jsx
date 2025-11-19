@@ -1,7 +1,22 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useQuoteModal } from "@/context/QuoteModalContext";
-import { Truck, PackageSearch, ShieldCheck, Gauge, BarChart2, Cog } from "lucide-react";
+import {
+  Truck,
+  PackageSearch,
+  ShieldCheck,
+  Gauge,
+  BarChart2,
+  Cog,
+  Plane,
+  Warehouse,
+  Route,
+  Globe,
+  Boxes,
+  ClipboardCheck,
+  Sparkles,
+} from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -16,8 +31,154 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
+const serviceProfiles = [
+  {
+    id: "rodo",
+    label: "Rodo Expresso",
+    summary: "Cobertura nacional com janelas fixas, cross-docking inteligente e monitoração em tempo real.",
+    heroKicker: "Rodo Expresso",
+    heroTitle: "Rede rodoviária orquestrada por dados",
+    description:
+      "Coordenamos coletas diárias, rotas interestaduais e distribuição last mile com monitoramento 24/7, integração TMS/WMS e squads de prontidão para qualquer ocorrência.",
+    stats: [
+      { label: "Prazo médio", value: "24-72h" },
+      { label: "Cobertura", value: "5.400+ cidades" },
+      { label: "Nível de serviço", value: "99,1%" },
+    ],
+    features: [
+      {
+        title: "Roteirização inteligente",
+        description: "Engine proprietário combina OTIF, custos e restrições de janela para definir as melhores rotas.",
+        icon: Route,
+      },
+      {
+        title: "SLA proativo",
+        description: "Time de gestão de risco acompanha cada viagem com alertas acionáveis e planos de contingência.",
+        icon: Gauge,
+      },
+      {
+        title: "Segurança embarcada",
+        description: "Sensores IoT, dupla autenticação e parceiros homologados por padrão ISO 28000.",
+        icon: ShieldCheck,
+      },
+    ],
+    media: "/camiao-na-rodovia-ao-por-sol.jpg",
+    mediaAlt: "Operação rodoviária da LogiPro",
+    icon: Truck,
+    ctaLabel: "Quero cotar Rodo Expresso",
+  },
+  {
+    id: "aereo",
+    label: "Air Priority",
+    summary: "Envios urgentes e sensíveis com bloqueio de capacidade e acompanhamento minuto a minuto.",
+    heroKicker: "Air Priority",
+    heroTitle: "Voos prioritários para cargas críticas",
+    description:
+      "Integramos companhias aéreas, handlers e malha rodoviária de apoio em um único painel. SLA dedicado, dupla checagem documental e rastreamento por milestones automatizados.",
+    stats: [
+      { label: "Lead time", value: "6-48h" },
+      { label: "Rotas ativas", value: "120+" },
+      { label: "Suporte", value: "24/7" },
+    ],
+    features: [
+      {
+        title: "Capacidade garantida",
+        description: "Bloqueamos espaços em voos comerciais e cargueiros para picos e operações contínuas.",
+        icon: Plane,
+      },
+      {
+        title: "Compliance regulatório",
+        description: "Time dedicado à gestão de ANAC/ANVISA com checklist digital e expedição ágil.",
+        icon: ShieldCheck,
+      },
+      {
+        title: "Visibilidade internacional",
+        description: "Integramos parceiros LATAM e USA com atualizações automáticas em seu TMS.",
+        icon: Globe,
+      },
+    ],
+    media: "/Background.jpg",
+    mediaAlt: "Aeronave pronta para embarque",
+    icon: Plane,
+    ctaLabel: "Contratar Air Priority",
+  },
+  {
+    id: "armazenagem",
+    label: "Fulfillment & Armazenagem",
+    summary: "Operação modular para D2C/B2B com WMS próprio, squads de implantação e inventário em tempo real.",
+    heroKicker: "Fulfillment",
+    heroTitle: "Centros logísticos hiperconectados",
+    description:
+      "Executamos recebimento, armazenagem, picking, packing e despacho com integrações nativas aos principais ERPs e marketplaces, além de projetos VMI e consolidação internacional.",
+    stats: [
+      { label: "Precisão inventário", value: "99,3%" },
+      { label: "Implantação", value: "Go-live em 30 dias" },
+      { label: "SKUs ativos", value: "60k+" },
+    ],
+    features: [
+      {
+        title: "WMS nativo",
+        description: "Portal único para slotting dinâmico, ondas de picking e rastreio unitário.",
+        icon: PackageSearch,
+      },
+      {
+        title: "Especialistas em D2C",
+        description: "Células dedicadas cuidam de personalização, kits e omnichannel.",
+        icon: Boxes,
+      },
+      {
+        title: "Governança ESG",
+        description: "Processos auditáveis, indicadores energéticos e relatórios de sustentabilidade.",
+        icon: ClipboardCheck,
+      },
+    ],
+    media: "/mulher-de-tiro-medio-segurando-o-pacote.jpg",
+    mediaAlt: "Profissional conferindo pedido no fulfillment",
+    icon: Warehouse,
+    ctaLabel: "Planejar fulfillment",
+  },
+  {
+    id: "projetos",
+    label: "Projetos dedicados",
+    summary: "Soluções turnkey para operações complexas com PMO, células ágeis e indicadores compartilhados.",
+    heroKicker: "Projetos sob medida",
+    heroTitle: "Squads consultivos para implantações críticas",
+    description:
+      "Desenhamos operações greenfield, migrações e programas de eficiência combinando engenharia logística, analytics e change management. Seu time ganha uma extensão com ownership total.",
+    stats: [
+      { label: "Payback médio", value: "12 meses" },
+      { label: "Especialistas", value: "40+" },
+      { label: "Workshops", value: "Sprint quinzenal" },
+    ],
+    features: [
+      {
+        title: "Design orientado a dados",
+        description: "Modelagem de cenários, simulações e definição de KPIs com dashboards em tempo real.",
+        icon: BarChart2,
+      },
+      {
+        title: "Arquitetura integrada",
+        description: "Integrações API-first entre TMS, WMS e ERPs para garantir fluxo único de informação.",
+        icon: Cog,
+      },
+      {
+        title: "Entrega contínua",
+        description: "Squads ágeis com cerimônias semanais e gestão de mudanças acompanhada por especialistas.",
+        icon: Sparkles,
+      },
+    ],
+    media: "/retrato-de-entregador-distribuindo-encomendas.jpg",
+    mediaAlt: "Equipe dedicada planejando operação",
+    icon: Cog,
+    ctaLabel: "Conversar sobre projetos dedicados",
+  },
+];
+
 function Services() {
   const { open } = useQuoteModal();
+  const [activeService, setActiveService] = useState(serviceProfiles[0].id);
+
+  const currentService = serviceProfiles.find((service) => service.id === activeService) ?? serviceProfiles[0];
 
   return (
     <div className="page">
@@ -31,7 +192,8 @@ function Services() {
             <span className="badge">Portfólio LogiPro</span>
             <h1>Serviços logísticos modulares para acompanhar o ritmo do seu negócio</h1>
             <p>
-              Da coleta à entrega final, coordenamos cada etapa com dados integrados, acompanhamento em tempo real e uma rede de parceiros certificada.
+              Da coleta à entrega final, coordenamos cada etapa com dados integrados, acompanhamento em tempo real e uma rede de
+              parceiros certificada.
             </p>
             <div className="hero__actions">
               <button type="button" className="btn btn-primary" onClick={open}>
@@ -53,67 +215,135 @@ function Services() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container services-grid">
-          <motion.div className="card" variants={container} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
+      <section className="section services-summary">
+        <div className="container">
+          <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}>
             <motion.span className="section__kicker" variants={item}>
-              Transporte inteligente
+              Visão geral
             </motion.span>
-            <motion.h2 variants={item}>Transporte fracionado premium</motion.h2>
+            <motion.h2 variants={item}>Escolha o módulo ideal ou combine todos</motion.h2>
             <motion.p variants={item}>
-              Coletas rápidas, roteirização dinâmica, rastreamento full time e equipe de prontidão para tratativas especiais.
+              Cada serviço pode operar de forma independente ou integrada, permitindo que você monte uma operação sob medida com indicadores
+              compartilhados e squads dedicados.
             </motion.p>
-            <motion.ul className="list" variants={container}>
-              <motion.li variants={item}>
-                <Truck size={18} /> Rede de hubs regionais com cross-docking otimizado
-              </motion.li>
-              <motion.li variants={item}>
-                <Gauge size={18} /> SLA sob medida com gestão proativa de ocorrências
-              </motion.li>
-              <motion.li variants={item}>
-                <ShieldCheck size={18} /> Monitoramento 24/7 com dupla autenticação e sensores IoT
-              </motion.li>
-            </motion.ul>
           </motion.div>
-          <motion.figure
-            className="services-media"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+          <motion.div
+            className="services-summary__grid"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
           >
-            <img src="/camiao-na-rodovia-ao-por-sol.jpg" alt="Caminhão na rodovia ao pôr do sol" />
-          </motion.figure>
+            {serviceProfiles.map((service) => {
+              const Icon = service.icon;
+              return (
+                <motion.button
+                  key={service.id}
+                  type="button"
+                  className={`services-summary__card services-summary__button ${activeService === service.id ? "is-active" : ""}`}
+                  variants={item}
+                  onClick={() => setActiveService(service.id)}
+                >
+                  <span className="services-summary__icon">
+                    <Icon size={22} />
+                  </span>
+                  <h3>{service.label}</h3>
+                  <p>{service.summary}</p>
+                  <span>Lead time: {service.stats[0].value}</span>
+                </motion.button>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
-      <section className="section section--highlight">
+      <section className="section services-tabs">
         <div className="container">
-          <motion.div className="section__header" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={container}>
+          <motion.div
+            className="section__header"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
             <motion.span className="section__kicker" variants={item}>
-              Logística integrada
+              Detalhamento dos serviços
             </motion.span>
-            <motion.h2 variants={item}>Integração ponta a ponta</motion.h2>
+            <motion.h2 variants={item}>Tabs inteligentes para navegar entre os módulos</motion.h2>
             <motion.p variants={item}>
-              Combinamos armazenagem, fulfillment, transporte e inteligência de dados em uma operação única, com indicadores compartilhados.
+              Explore cada solução, visualize benefícios e abra a cotação já com o serviço pré-selecionado.
             </motion.p>
           </motion.div>
-          <motion.div className="grid grid-3" variants={container} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}>
-            <motion.article className="card" variants={item}>
-              <PackageSearch size={26} className="card__icon" />
-              <h3>Fulfillment sob demanda</h3>
-              <p>Picking e packing escalável com integração nativa aos principais ERPs e plataformas de e-commerce.</p>
-            </motion.article>
-            <motion.article className="card" variants={item}>
-              <BarChart2 size={26} className="card__icon" />
-              <h3>Gestão orientada a dados</h3>
-              <p>Dashboards de performance e previsões apoiadas por machine learning para antecipar demandas.</p>
-            </motion.article>
-            <motion.article className="card" variants={item}>
-              <Cog size={26} className="card__icon" />
-              <h3>Projetos sob medida</h3>
-              <p>Desenho de operações dedicadas com squads ágeis acompanhando KPIs semanais.</p>
-            </motion.article>
+          <div className="services-tabs__list" role="tablist">
+            {serviceProfiles.map((service) => (
+              <button
+                key={service.id}
+                type="button"
+                role="tab"
+                id={`tab-${service.id}`}
+                className={`services-tabs__button ${activeService === service.id ? "is-active" : ""}`}
+                aria-selected={activeService === service.id}
+                aria-controls={`panel-${service.id}`}
+                onClick={() => setActiveService(service.id)}
+              >
+                {service.label}
+              </button>
+            ))}
+          </div>
+          <motion.div
+            key={currentService.id}
+            className="services-tabpanel"
+            role="tabpanel"
+            id={`panel-${currentService.id}`}
+            aria-labelledby={`tab-${currentService.id}`}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+          >
+            <div className="services-tabpanel__grid">
+              <div>
+                <div className="services-tabpanel__hero">
+                  <span>{currentService.heroKicker}</span>
+                  <h3>{currentService.heroTitle}</h3>
+                </div>
+                <p className="services-tabpanel__description">{currentService.description}</p>
+                <div className="services-tabpanel__stats">
+                  {currentService.stats.map((stat) => (
+                    <div className="services-tabpanel__stat" key={stat.label}>
+                      <span>{stat.label}</span>
+                      <strong>{stat.value}</strong>
+                    </div>
+                  ))}
+                </div>
+                <ul className="services-tabpanel__features">
+                  {currentService.features.map((feature) => {
+                    const FeatureIcon = feature.icon;
+                    return (
+                      <li key={feature.title} className="services-tabpanel__feature">
+                        <span className="services-tabpanel__feature-icon">
+                          <FeatureIcon size={20} />
+                        </span>
+                        <div>
+                          <h4>{feature.title}</h4>
+                          <p>{feature.description}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div className="services-tabpanel__ctas">
+                  <button type="button" className="btn btn-primary" onClick={() => open(currentService.id)}>
+                    {currentService.ctaLabel}
+                  </button>
+                  <Link to="/contato" className="hero__secondary">
+                    Conversar com um especialista
+                  </Link>
+                </div>
+              </div>
+              <figure className="services-tabpanel__media">
+                <img src={currentService.media} alt={currentService.mediaAlt} />
+              </figure>
+            </div>
           </motion.div>
         </div>
       </section>

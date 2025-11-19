@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -7,7 +7,16 @@ const modalVariants = {
   visible: { opacity: 1, y: 0, scale: 1 },
 };
 
-export function QuoteModal({ isOpen, onClose }) {
+const serviceOptions = [
+  { value: "rodo", label: "Rodo Expresso" },
+  { value: "aereo", label: "Air Priority" },
+  { value: "armazenagem", label: "Fulfillment & Armazenagem" },
+  { value: "projetos", label: "Projetos dedicados" },
+];
+
+export function QuoteModal({ isOpen, selectedService, onClose }) {
+  const [service, setService] = useState("");
+
   useEffect(() => {
     if (!isOpen) return;
     const handleKey = (event) => {
@@ -16,6 +25,13 @@ export function QuoteModal({ isOpen, onClose }) {
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setService(selectedService ?? "");
+  }, [isOpen, selectedService]);
+
+  const selectedLabel = serviceOptions.find((option) => option.value === service)?.label;
 
   return (
     <AnimatePresence>
@@ -42,6 +58,11 @@ export function QuoteModal({ isOpen, onClose }) {
               <div>
                 <p className="modal-kicker">Solicite uma proposta</p>
                 <h2>Nos conte sobre a sua operação</h2>
+                {selectedLabel && (
+                  <p className="modal-selection">
+                    Serviço selecionado: <strong>{selectedLabel}</strong>
+                  </p>
+                )}
               </div>
               <button type="button" aria-label="Fechar modal" onClick={onClose} className="modal-close">
                 <X size={20} />
@@ -63,6 +84,17 @@ export function QuoteModal({ isOpen, onClose }) {
               <label>
                 Telefone
                 <input type="tel" name="phone" placeholder="(00) 00000-0000" />
+              </label>
+              <label>
+                Tipo de serviço
+                <select name="service" value={service} onChange={(event) => setService(event.target.value)}>
+                  <option value="">Selecione o serviço desejado</option>
+                  {serviceOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </label>
               <label>
                 Como podemos ajudar?
