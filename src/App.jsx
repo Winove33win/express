@@ -1,18 +1,13 @@
-import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-
 import Home from "./Home";
+import useScrollAnimations from "./hooks/useScrollAnimations";
 
 function App() {
-  useEffect(() => {
-    AOS.init({
-      duration: 900,
-      easing: "ease-out-cubic",
-      once: true,
-      offset: 60,
-    });
-  }, []);
+  useScrollAnimations({
+    duration: 900,
+    easing: "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    offset: 60,
+    once: true,
+  });
 
   return <Home />;
 }
